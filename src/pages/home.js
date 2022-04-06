@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/header';
 import CardUser from '../components/carduser';
-import TableRepos from '../components/tablerepos';
 import { 
         Container,
         InputGroup, 
