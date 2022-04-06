@@ -20,7 +20,6 @@ export default class User{
         }
         try{
             const response = await fetch(url);
-            console.log(response);
             const responseJson = await response.json();
             var msg = 'Ocorreu um erro ao consultar o usuário.';
             if(response.status === 404)
@@ -39,7 +38,8 @@ export default class User{
     }
 
     async reposList(username){
-        const url = endpoints.user.repos + '/' + username;
+        var url = endpoints.user.repos;
+        url = url.replace('NOME_USUARIO', username);
 
         const payload = {
             method: 'GET',
@@ -50,7 +50,7 @@ export default class User{
             }
         }
         try{
-            const response = await fetch(url, payload);
+            const response = await fetch(url);
             const responseJson = await response.json();
 
             if(!response.ok){
@@ -66,7 +66,8 @@ export default class User{
     }
 
     async starredList(username){
-        const url = endpoints.user.starred + '/' + username;
+        var url = endpoints.user.starred;
+        url = url.replace('NOME_USUARIO', username);
 
         const payload = {
             method: 'GET',
@@ -77,8 +78,9 @@ export default class User{
             }
         }
         try{
-            const response = await fetch(url, payload);
+            const response = await fetch(url);
             const responseJson = await response.json();
+            console.log(response);
 
             if(!response.ok){
                 return this._errorResponse(
