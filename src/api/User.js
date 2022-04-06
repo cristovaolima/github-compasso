@@ -10,14 +10,6 @@ export default class User{
     async show(username){
         const url = endpoints.user.show + '/' + username;
 
-        const payload = {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`
-            }
-        }
         try{
             const response = await fetch(url);
             const responseJson = await response.json();
@@ -41,14 +33,6 @@ export default class User{
         var url = endpoints.user.repos;
         url = url.replace('NOME_USUARIO', username);
 
-        const payload = {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`
-            }
-        }
         try{
             const response = await fetch(url);
             const responseJson = await response.json();
@@ -69,18 +53,9 @@ export default class User{
         var url = endpoints.user.starred;
         url = url.replace('NOME_USUARIO', username);
 
-        const payload = {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`
-            }
-        }
         try{
             const response = await fetch(url);
             const responseJson = await response.json();
-            console.log(response);
 
             if(!response.ok){
                 return this._errorResponse(
