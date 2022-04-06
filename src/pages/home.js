@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/header';
 import CardUser from '../components/carduser';
+import TableRepos from '../components/tablerepos';
 import { 
         Container,
         InputGroup, 
@@ -14,14 +15,15 @@ import { ApiService } from '../api';
 export default function Home() {
     const [name, setName] = useState('');
     const [user, setUser] = useState([]);
+    const [repos, setRepos] = useState([]);
+    const [reposStarred, setReposStarred] = useState([]);
     const [noRegisters, setNoRegisters] = useState(false);
     const [loading, setLoading] = useState(false);
 
     async function seach(){
         setNoRegisters(false);
         setLoading(true);
-        const responseJson = await ApiService.user.show(name);
-        console.log(responseJson);  
+        const responseJson = await ApiService.user.show(name); 
         if(responseJson.error){
             setNoRegisters(true);
             setUser([]);
@@ -29,6 +31,40 @@ export default function Home() {
             return;
         }else{
             setUser(responseJson);
+            loadRepos();
+            loadReposStarred();
+            setLoading(false);
+            return;
+        }
+    }
+
+    async function loadRepos(){
+        setNoRegisters(false);
+        setLoading(true);
+        const responseJson = await ApiService.user.reposList(name); 
+        if(responseJson.error){
+            setNoRegisters(true);
+            setRepos([]);
+            setLoading(false);          
+            return;
+        }else{
+            setRepos(responseJson);
+            setLoading(false);
+            return;
+        }
+    }
+
+    async function loadReposStarred(){
+        setNoRegisters(false);
+        setLoading(true);
+        const responseJson = await ApiService.user.starredList(name); 
+        if(responseJson.error){
+            setNoRegisters(true);
+            setReposStarred([]);
+            setLoading(false);          
+            return;
+        }else{
+            setReposStarred(responseJson);
             setLoading(false);
             return;
         }
@@ -53,7 +89,9 @@ export default function Home() {
                     </Button>
                 </InputGroup>
                 <br/>
-                {name !== '' && user.length != 0 && !loading ? <CardUser user={user}/> : null}
+                {name !== '' && user.length != 0 && !loading ? 
+                    <CardUser user={user} repos={repos} reposStarred={reposStarred}/> 
+                    : null}
                 {noRegisters ? <b>Usuário não encontrado.</b> : null}
                 <br/>
                 <br/>                
