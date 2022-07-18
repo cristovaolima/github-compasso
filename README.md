@@ -8,3 +8,6 @@ Desafio técnico seguindo o [roteiro](https://github.com/recrutamento-compasso/a
 **Executar o projeto**
 * No diretório do projeto, `npm install` para instalar dependências do projeto;
 * No diretório do projeto, `npm start` para iniciar o servidor e executar o projeto.
+
+**Projeto online**
+* https://github-perfil.netlify.app/
